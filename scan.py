@@ -1,10 +1,26 @@
 from wifi import Cell
+from wifi.scan import subprocess, cells_re
 
+class Wifi(Cell):
+    def all(cls):
+        """
+        Returns a list of all cells extracted from the output of iwlist.
+        """
+        try:
+            iwlist_scan = subprocess.check_output(['/sbin/iwlist', 'scan'],
+                                                  stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise InterfaceError(e.output.strip())
+        else:
+            iwlist_scan = iwlist_scan.decode('utf-8')
+        cells = map(Cell.from_string, cells_re.split(iwlist_scan)[1:])
+
+        return cells
 
 #c = list of scanned wifi
 
 def scan( length ):
-    c=Cell().all('wlo1')
+    c=Wifi().all()
     print c 
     int(length)
     beacon = []
