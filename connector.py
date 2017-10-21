@@ -1,6 +1,7 @@
 #from wifi import Cell
 #from wifi.scan import subprocess, cells_re
 from jnius import autoclass, cast
+import json
 
 '''
 class Linux(Cell):
@@ -22,23 +23,14 @@ class Linux(Cell):
 
 
 class Android(object):
-    
-    #ConnectivityManager = autoclass('android.net.ConnectivityManager')
-    #WifiConfiguration = autoclass('android.net.wifi.WifiConfiguration')
-    
-    #Activity = autoclass('android.app.Activity')
-
-    beacons = []
-
+    Context = autoclass('android.content.Context')
+    PythonActivity = autoclass('org.kivy.android.PythonActivity')
+    activity = PythonActivity.mActivity
     def all(self):
-        '''
-        wifi = cast(self.ConnectivityManager,
-                    self.activity.getSystemService(self.Context.WIFI_SERVICE))
-        '''
-        Context = autoclass('android.content.Context')
-        #WifiManager = autoclass('android.net.wifi.WifiManager')
-        PythonActivity = autoclass('org.renpy.android.PythonActivity')
-        activity = PythonActivity.mActivity
-        #wifi = activity.getSystemService(Context.WIFI_SERVICE)
-        WifiManager = autoclass('android.net.wifi.WifiManager')
-        return wifi.getScanResults()
+        # WifiManager
+        wifi = self.activity.getSystemService(self.Context.WIFI_SERVICE)
+
+        return [x.SSID for x in wifi.getScanResults().toArray()]
+
+    def start(self):
+        pass

@@ -3,24 +3,23 @@ from time import time, sleep
 
 class Scanner(object):
     beacons = []
+    mine = "6666666666"
 
     def scan(self, length=10):
         w = Android()
-        return w.all()
-    '''
+
         c = w.all()
 
-        for ssid_idx in range(0,len(c)):
-            ssid = c[ssid_idx].ssid
-
+        for ssid in c:
             if len(ssid) == length and ssid.isdigit() \
                and ssid not in self.beacons:
                 self.beacons.append(ssid)
 
         return self.beacons
-    '''
 
-    '''
+    def startHotspot(self):
+        pass
+
     def run(self, length=10, alive=1):
         self.beacon = []
         start = time()
@@ -29,7 +28,6 @@ class Scanner(object):
 
         start = time()
         while(time() - start < 1):
-            pass
+            self.startHotspot()
 
         return self.beacons
-    '''

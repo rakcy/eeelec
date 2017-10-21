@@ -7,7 +7,7 @@ class Main(App):
     def build(self):
         try:
             s = Scanner()
-            beacons = s.scan()
+            beacons = s.run()
             return Label(text=str(beacons))
         except Exception as e:
             return Label(text=str(e))
