@@ -1,5 +1,4 @@
-class test(Object):
-    pass
+from wifi import Cell
 
-print("Get rekt")
-print("EDITED")
+c = Cell()
+c.all()
