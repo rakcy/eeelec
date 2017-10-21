@@ -1,4 +1,3 @@
-from wifi import Cell
+from scan import scan
 
-c = Cell()
-c.all()
+print(scan(10))
