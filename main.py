@@ -1,10 +1,3 @@
-import math
-import sys
-import random
-import os 
+from scan import scan
 
-class test(Object):
-    pass
-
-print("Get rekt")
-
+print(scan(10))
