@@ -1,11 +1,15 @@
 __version__ = "1.0"
-from scan import scan
+from scan import Scanner
 from kivy.app import App
 from kivy.uix.label import Label
 
-class Hello(App):
+class Main(App):
     def build(self):
-        beacons = scan(10)
-        return Label(text=beacons[0])
+        try:
+            s = Scanner()
+            beacons = s.scan()
+            return Label(text=str(beacons))
+        except Exception as e:
+            return Label(text=str(e))
 
-Hello().run()
+Main().run()

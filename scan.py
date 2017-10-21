@@ -1,35 +1,35 @@
-from wifi import Cell
-from wifi.scan import subprocess, cells_re
+from connector import Android
+from time import time, sleep
 
-class Wifi(Cell):
-    def all(cls):
-        """
-        Returns a list of all cells extracted from the output of iwlist.
-        """
-        try:
-            iwlist_scan = subprocess.check_output(['/sbin/iwlist', 'scan'],
-                                                  stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as e:
-            raise InterfaceError(e.output.strip())
-        else:
-            iwlist_scan = iwlist_scan.decode('utf-8')
-        cells = map(Cell.from_string, cells_re.split(iwlist_scan)[1:])
+class Scanner(object):
+    beacons = []
 
-        return cells
+    def scan(self, length=10):
+        w = Android()
+        return w.all()
+    '''
+        c = w.all()
 
-#c = list of scanned wifi
-
-def scan( length ):
-    c=Wifi().all()
-    # print c 
-    int(length)
-    beacon = []
-
-    list_len=len(c) #get length of list c
-    # print list_len
-    for ssid_idx in range(0,list_len):
-        if len(c[ssid_idx].ssid) == length and c[ssid_idx].ssid.isdigit():
+        for ssid_idx in range(0,len(c)):
             ssid = c[ssid_idx].ssid
-            beacon.append(ssid)
-            # print beacon
-    return beacon
+
+            if len(ssid) == length and ssid.isdigit() \
+               and ssid not in self.beacons:
+                self.beacons.append(ssid)
+
+        return self.beacons
+    '''
+
+    '''
+    def run(self, length=10, alive=1):
+        self.beacon = []
+        start = time()
+        while(time() - start < 1):
+            self.scan(length)
+
+        start = time()
+        while(time() - start < 1):
+            pass
+
+        return self.beacons
+    '''
